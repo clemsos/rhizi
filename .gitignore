@@ -81,3 +81,7 @@ target/
 
 node_modules
 
+node_modules/rhizi-tests.log
+node_modules/
+
+nosetests.xml
