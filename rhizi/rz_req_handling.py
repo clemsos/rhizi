@@ -65,7 +65,6 @@ def __common_resp_handle(data, error, status):
     # more response processing
     return resp
 
-
 def common_resp_handle__success(data=None, error=None, status=200):
     return __common_resp_handle(data, error, status)
 

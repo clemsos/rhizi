@@ -89,7 +89,6 @@ def init_webapp(cfg, kernel):
     def page_not_found(e):
         return "Page not found, sorry"
 
-
     # REST API endpoints
     @webapp.route("/api/")
     def flask_route_test():
@@ -141,77 +140,5 @@ def init_webapp(cfg, kernel):
     webapp.add_url_rule('/', '/index', index, methods=['GET'])
     webapp.add_url_rule('/index.html', index, methods=['GET'])
 
-    # if cfg.signup_enabled:
-        #     rest_entry_set.append(rest_entry('/signup', rz_user.rest__user_signup, methods=['GET', 'POST']))
-
     return webapp
-
-
-# def init_rest_interface(cfg, flask_webapp):
-#     """
-#     Initialize REST interface
-#     """
-    # def rest_entry(path, f, flask_args=methods=['POST']):
-    #     return (path, f, flask_args)
-
-    # def redirect_entry(path, path_to, flask_args):
-    #     def redirector():
-    #         return redirect(path_to, code=302)
-    #     redirector.func_name = 'redirector_%s' % path.replace('/', '_')
-    #     return (path, redirector, flask_args)
-
-    # def login_decorator(f):
-    #     """
-    #     security boundary: assert logged-in user before executing REST api call
-    #     """
-    #     @wraps(f)
-    #     def wrapped_function(*args, **kw):
-    #         if None == session.get('username'):
-    #             return redirect('/login')
-    #         return f(*args, **kw)
-
-    #     return wrapped_function
-
-
-    # def localhost_access_decorator__ipv4(f):
-    #     """
-    #     security boundary: assert request originated from localhost
-
-    #     @bug: consider broken until #496 is resolved - in the meantime use AC in proxy
-    #     """
-
-    #     @wraps(f)
-    #     def wrapped_function(*args, **kw):
-
-    #         rmt_addr, _ = request.peer_sock_addr
-    #         if '127.0.0.1' != rmt_addr:
-    #             log.warning('unauthorized attempt to access localhost restricted path: %s' % (request.path))
-    #             return make_response__http__empty(stauts=403)
-
-    #         return f(*args, **kw)
-
-    #     return wrapped_function
-
-    # rest_entry_set = [
-    #               ]
-
-    # # FIXME: but should be rate limited (everything should be, regardless of login)
-    # no_login_paths = ['/feedback', '/login', '/pw-reset', '/signup']
-
-    # for re_entry in rest_entry_set:
-    #     rest_path, f, flask_args = re_entry
-
-    #     if cfg.access_control and rest_path not in no_login_paths:
-    #         # currently require login on all but /login paths
-    #         f = login_decorator(f)
-
-    #     # apply local host access restriction
-    #     if rest_path.startswith('/monitor'):
-    #         f = localhost_access_decorator__ipv4(f)
-
-    #     # [!] order seems important - apply route decorator last
-    #     route_dec = flask_webapp.route(rest_path, **flask_args)
-    #     f = route_dec(f)
-
-    #     flask_webapp.f = f  # assign decorated function
 
