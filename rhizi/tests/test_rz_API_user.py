@@ -20,7 +20,7 @@ import logging
 import unittest
 
 from ..rz_config import RZ_Config
-from ..rz_server import FlaskExt, init_webapp
+from ..rz_server import init_webapp
 from ..rz_user import rest__user_signup, User_Signup_Request
 from .util import gen_random_name, gen_random_user_signup, RhiziTestBase
 from .test_util__pydev import debug__pydev_pd_arg

@@ -116,6 +116,33 @@ class TestRhiziAPI(RhiziTestBase):
             lookup_duplicate_doc = self.kernel.rzdoc__lookup_by_name("test_duplicate_doc")
             self.assertEqual(lookup_duplicate_doc, None)
 
+    def test_search(self):
+        """API should allow to find documents by name"""
+        with self.webapp.test_client() as c:
+
+            req = c.post('/api/rzdoc/search',
+                         content_type='application/json',
+                         data=json.dumps({'search_query': self.rzdoc_name}))
+            self.assertEqual(req.status_code, 200)
+            req_data = json.loads(req.data)
+            self.assertIn(self.rzdoc_name, str(req_data["data"]))
+            self.assertEqual(req_data["error"], None)
+
+    def test_search_error(self):
+        """Wrong query in API search should raise error"""
+        with self.webapp.test_client() as c:
+            req = c.post('/api/rzdoc/search',
+                 content_type='application/json',
+                 data=json.dumps({'search_query': "random non-existing stuff"}))
+
+            self.assertEqual(req.status_code, 200)
+            req_data = json.loads(req.data)
+            self.assertEqual(req_data["data"], [])
+            self.assertEqual(req_data["error"], None )
+
+
+    # Fetch nodes sets
+
     def test_load_node_non_existing(self):
         """ Loading a non existing node test """
         id_set = ['non_existing_id']
@@ -130,9 +157,7 @@ class TestRhiziAPI(RhiziTestBase):
             self.assertEqual(0, len(rz_data))
 
     def test_load_node_set_by_id_existing(self):
-        """
-        loading an existing node test
-        """
+        """ Loading an existing node test """
         id_set = ['skill_00']
         q = ['create (s:Skill {id: \'skill_00\'} )']
         op = DBO_raw_query_set(q)
@@ -146,9 +171,6 @@ class TestRhiziAPI(RhiziTestBase):
 
             self.assertEqual(1, len(n_set))
             self.assertEqual(n_set[0]['id'], id_set[0])
-
-    def test_load_node_set(self):
-        pass
 
 @debug__pydev_pd_arg
 def main():

@@ -92,6 +92,9 @@ def init_webapp(cfg, kernel):
     webapp.add_url_rule('/feedback', "feedback", rz_feedback.rest__send_user_feedback__email, methods=["POST"])
     webapp.add_url_rule('/match/node-set', "match-node-set", rz_api_rest.match_node_set_by_attr_filter_map, methods=["POST"])
 
+    if cfg.signup_enabled:
+        webapp.add_url_rule('/signup', "signup", rz_user.rest__user_signup, methods =['GET', 'POST'] )
+
     # pretty URLs
     webapp.add_url_rule('/rz/<path:rzdoc_name>', "rz-get-doc", rz_api_rest.rzdoc__via_rz_url, methods=['GET'])
 
