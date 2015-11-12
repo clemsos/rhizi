@@ -17,6 +17,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+from functools import wraps
+
 from flask import Flask, render_template, session, request, redirect
 
 from . import rz_api
@@ -32,7 +34,6 @@ from .rz_api_common import sanitize_input__rzdoc_name
 from .rz_req_handling import common_resp_handle__client_error
 
 log = logging.getLogger('rhizi')
-
 
 def init_webapp(cfg, kernel):
     """
@@ -63,6 +64,17 @@ def init_webapp(cfg, kernel):
     webapp.root_path = root_path  # for some reason calling config.from_xxx() does not have effect
     webapp.rz_config = cfg
     webapp.kernel = kernel 
+
+    def login_required(f):
+        """
+        Security boundary: assert logged-in user before executing REST api call
+        """
+        @wraps(f)
+        def wrapped_function(*args, **kw):
+            if session.get('username') is None:
+                return redirect('/login')
+            return f(*args, **kw)
+        return wrapped_function
 
     # Proxy Mode
     # if cfg.reverse_proxy_host is not None:  
@@ -96,7 +108,7 @@ def init_webapp(cfg, kernel):
         webapp.add_url_rule('/signup', "signup", rz_user.rest__user_signup, methods =['GET', 'POST'] )
 
     # pretty URLs
-    webapp.add_url_rule('/rz/<path:rzdoc_name>', "rz-get-doc", rz_api_rest.rzdoc__via_rz_url, methods=['GET'])
+    webapp.add_url_rule('/rz/<path:rzdoc_name>', "rz-get-doc", login_required(rz_api_rest.rzdoc__via_rz_url), methods=['GET'])
 
     # rz-doc CRUD endpoints
     webapp.add_url_rule('/api/rzdoc/clone', "rzdoc_clone", rz_api_rest.rzdoc_clone, methods=["POST"])

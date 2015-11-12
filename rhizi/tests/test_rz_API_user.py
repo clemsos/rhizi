@@ -29,7 +29,7 @@ from .test_util__pydev import debug__pydev_pd_arg
 class Test_RZ_User(RhiziTestBase):
 
     def test_user_signup__acl_domain(self):
-
+        """Email registration should support domains whitelisting"""
         self.webapp.testing = True
         self.webapp.rz_config.access_control = True
         self.webapp.rz_config.acl_wl__email_domain_set = 'a.org, b.org'
@@ -50,6 +50,10 @@ class Test_RZ_User(RhiziTestBase):
                 req_data = json.loads(req.data)
                 self.assertEqual(expected_status_code, req.status_code, req_data)
 
+    def test_anonymous_user(self):
+        """ An anonymous (not logged in) user should be redirected to home page"""
+
+        with self.webapp.test_client() as test_client:
 
 @debug__pydev_pd_arg
 def main():
