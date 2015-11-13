@@ -20,7 +20,7 @@ import logging
 import unittest
 
 from ..rz_config import RZ_Config
-from ..rz_server import FlaskExt, init_webapp
+from ..rz_server import init_webapp
 from ..rz_user import rest__user_signup, User_Signup_Request
 from .test_util import gen_random_name
 from .test_util__pydev import debug__pydev_pd_arg
@@ -41,7 +41,12 @@ class Test_RZ_User(unittest.TestCase):
         pass
 
     def test_user_signup__acl_domain(self):
+<<<<<<< HEAD:rhizi/tests/test_rz_user.py
 
+=======
+        """Email registration should support domains whitelisting"""
+        self.webapp.testing = True
+>>>>>>> 86c47b9... clean API testing:rhizi/tests/test_rz_API_user.py
         self.webapp.rz_config.access_control = True
         self.webapp.rz_config.mta_port = 50000  # prevent accidental email sending
         self.webapp.rz_config.acl_wl__email_domain_set = 'a.org, b.org'
