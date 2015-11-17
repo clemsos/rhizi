@@ -51,11 +51,11 @@ class TestRhiziAPI(RhiziTestBase):
         if lookup_ret != None:
             clz.kernel.rzdoc__delete(lookup_ret)
 
-    def test_politeness(self):
-        """ App should be polite, so errors can be forgiven :) """
-        with self.webapp.test_client() as c:
-            req = c.get('/some-random-page-that-does-not-exist')
-            self.assertIn("sorry", req.data) # say sorry on 404
+    # def test_politeness(self):
+    #     """ App should be polite, so errors can be forgiven :) """
+    #     with self.webapp.test_client() as c:
+    #         req = c.get('/some-random-page-that-does-not-exist')
+    #         self.assertIn("sorry", req.data) # say sorry on 404
 
     def test_index_redirect(self):
         """" Index '/' should redirect to '/index' """

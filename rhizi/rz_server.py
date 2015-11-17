@@ -351,7 +351,6 @@ def shutdown():
     user_db.shutdown()
     webapp.kernel.shutdown()
 
-
 def main():
 
     global log

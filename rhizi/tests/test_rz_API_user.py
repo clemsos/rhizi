@@ -29,16 +29,10 @@ from .test_util__pydev import debug__pydev_pd_arg
 class Test_RZ_User(RhiziTestBase):
 
     def test_user_signup__acl_domain(self):
-<<<<<<< HEAD:rhizi/tests/test_rz_user.py
 
-<<<<<<< HEAD:rhizi/tests/test_rz_API_user.py
-=======
         """Email registration should support domains whitelisting"""
         self.webapp.testing = True
->>>>>>> 86c47b9... clean API testing:rhizi/tests/test_rz_API_user.py
-=======
-        self.webapp.testing = True
->>>>>>> master:rhizi/tests/test_rz_user.py
+
         self.webapp.rz_config.access_control = True
         self.webapp.rz_config.acl_wl__email_domain_set = 'a.org, b.org'
         self.webapp.rz_config.acl_wl__email_address_set_cached = ['alice@foo.bar', 'alice@zoo.bar']  # hack: acl_wl__email_address_set_cached attribute access
