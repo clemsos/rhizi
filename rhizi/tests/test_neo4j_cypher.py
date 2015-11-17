@@ -31,14 +31,18 @@ from ..neo4j_util import meta_attr_list_to_meta_attr_map
 from ..rz_config import RZ_Config
 <<<<<<< HEAD
 from ..rz_server import init_log
+<<<<<<< HEAD
 from .test_util import generate_random_node_dict, generate_random_link_dict, \
 =======
 from ..rz_start import init_log
 from .util import generate_random_node_dict, generate_random_link_dict, \
 >>>>>>> 86c47b9... clean API testing
+=======
+from .util import generate_random_node_dict, generate_random_link_dict, \
+>>>>>>> master
     generate_random_RZDoc
 from .test_util__pydev import debug__pydev_pd_arg
-from .test_util import RhiziTestBase
+from .util import RhiziTestBase
 
 
 class Test_DB_Op(RhiziTestBase):
